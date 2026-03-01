@@ -1,19 +1,19 @@
 let modInfo = {
-	name: "The ??? Tree",
-	author: "nobody",
+	name: "The Upgradeverse Tree",
+	author: "liam",
 	pointsName: "points",
-	modFiles: ["layers.js", "tree.js"],
+	modFiles: ["tree.js", 'up.js', 'p.js', 'sp.js', 'c.js', 'm.js'],
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (10), // Used for hard resets and new players
-	offlineLimit: 1,  // In hours
+	initialStartPoints: new Decimal (0), // Used for hard resets and new players
+	offlineLimit: 1.5,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "1.0.0",
+	name: "The start a verse",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
@@ -40,8 +40,27 @@ function canGenPoints(){
 function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
-
 	let gain = new Decimal(1)
+	if (hasUpgrade('sp', 12)) gain = gain.add(2)
+
+	if (hasUpgrade('up', 11)) gain = gain.times(3)
+	if (hasUpgrade('p', 11)) gain = gain.times(2)
+	if (hasUpgrade('p', 12)) gain = gain.times(upgradeEffect('p', 12))
+	if (hasUpgrade('p', 13)) gain = gain.times(upgradeEffect('p', 13))
+	if (hasUpgrade('p', 14)) gain = gain.times(4)
+	if (hasUpgrade('up', 13)) gain = gain.times(4)
+	if (hasUpgrade('sp', 13)) gain = gain.times(2.5)
+	if (hasUpgrade('up', 14)) gain = gain.times(5)
+	if (hasUpgrade('c', 12)) gain = gain.times(upgradeEffect('c', 12))
+	if (hasUpgrade('up', 15)) gain = gain.times(4)
+	if (hasUpgrade('up', 14)) gain = gain.times(3)
+	if (hasUpgrade('up', 21)) gain = gain.times(3.5)
+	if (hasUpgrade('mp', 11)) gain = gain.times(200)
+
+    
+
+	if (hasUpgrade('mp', 11)) gain = gain.pow(1.005)
+
 	return gain
 }
 
@@ -55,7 +74,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e280000000"))
+	return player.points.gte(new Decimal("1e20"))
 }
 
 
