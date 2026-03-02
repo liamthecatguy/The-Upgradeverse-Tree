@@ -20,6 +20,7 @@ addLayer("sp", {
         mult = new Decimal(1);
         if (hasUpgrade('up', 15)) mult = mult.times(6)
         if (hasUpgrade('sp', 14)) mult = mult.times(3)
+        if (hasUpgrade('mp', 13)) mult = mult.times(50)
 
 
         return mult
@@ -33,7 +34,8 @@ addLayer("sp", {
         {key: "s", description: "S: Reset for super prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
     layerShown(){return hasUpgrade('up', 13)},
-    
+        passiveGeneration() {return hasMilestone('mp', 2) || hasUpgrade('u', 11) ? 1:0},
+
     upgrades: {
     11: {
         title: "Super Prestige Upgrade 11",
@@ -62,7 +64,7 @@ addLayer("sp", {
      15: {
         title: "Super Prestige Upgrade 15",
         description: "X5 upgrade power",
-        cost: new Decimal(8000),
+        cost: new Decimal(4000),
         unlocked() {return hasUpgrade("up", 15)}
     },
     

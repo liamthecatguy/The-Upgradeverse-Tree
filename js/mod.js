@@ -2,7 +2,7 @@ let modInfo = {
 	name: "The Upgradeverse Tree",
 	author: "liam",
 	pointsName: "points",
-	modFiles: ["tree.js", 'up.js', 'p.js', 'sp.js', 'c.js', 'm.js'],
+	modFiles: ["tree.js", 'up.js', 'p.js', 'sp.js', 'c.js', 'm.js', 'u.js'],
 
 	discordName: "",
 	discordLink: "",
@@ -12,14 +12,17 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.0.0",
-	name: "The start a verse",
+	num: "1.1.0",
+	name: "Automation",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.0</h3><br>
-		- Added things.<br>
-		- Added stuff.`
+<h3>v1.1.0 - The Mega Extension - 3/2/2026</h3><br>
+		- Added 2 upgrade power upgrades<br>
+		- Added more mega stuff<br>
+		- Added a new layer, ultra prestige<br>
+
+		<br><br> - Note from dev: Thanks for playing my game! You found a 'secret'`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
@@ -42,6 +45,7 @@ function getPointGen() {
 		return new Decimal(0)
 	let gain = new Decimal(1)
 	if (hasUpgrade('sp', 12)) gain = gain.add(2)
+	if (hasUpgrade('mp', 21)) gain = gain.add(30)
 
 	if (hasUpgrade('up', 11)) gain = gain.times(3)
 	if (hasUpgrade('p', 11)) gain = gain.times(2)
@@ -56,6 +60,8 @@ function getPointGen() {
 	if (hasUpgrade('up', 14)) gain = gain.times(3)
 	if (hasUpgrade('up', 21)) gain = gain.times(3.5)
 	if (hasUpgrade('mp', 11)) gain = gain.times(200)
+	if (hasUpgrade('c', 14)) gain = gain.times(1000)
+	if (hasUpgrade('u', 11)) gain = gain.times(3000)
 
     
 
@@ -74,7 +80,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("1e20"))
+	return (hasUpgrade('u', 11))
 }
 
 

@@ -28,6 +28,7 @@ addLayer("up", {
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         exp = new Decimal(1);
+        if (hasUpgrade('c', 22)) exp = exp.times(1.2)
         return exp
     },
     row: 1, // Row the layer is in on the tree (0 is the first row)
@@ -86,6 +87,18 @@ addLayer("up", {
         title: "Upgrade Power Upgrade 21",
         description: "Unlock mega points, x3.5 points",
         cost: new Decimal(2.5e11),
+        
+    },
+     22: {
+        title: "Upgrade Power Upgrade 22",
+        description: "Unlock new color upgrades",
+        cost: new Decimal(2e21),
+        
+    },
+     23: {
+        title: "Upgrade Power Upgrade 23",
+        description: "Unlock ultra prestige and x10,000 prestige points",
+        cost: new Decimal(1e35),
         
     },
     

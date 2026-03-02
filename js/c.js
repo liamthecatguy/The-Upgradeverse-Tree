@@ -19,7 +19,9 @@ addLayer("c", {
     exponent: 1.25, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1);
-       
+       if (hasUpgrade('mp', 14)) mult = mult.div(10)
+       if (hasUpgrade('mp', 23)) mult = mult.div(35)
+       if (hasUpgrade('mp', 25)) mult = mult.div(20)
 
 
         return mult
@@ -33,7 +35,7 @@ addLayer("c", {
         {key: "c", description: "C: Reset for colors", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
     layerShown(){return hasUpgrade('up', 14)},
-    
+    canBuyMax() {return (hasUpgrade('mp', 24))},
     upgrades: {
     11: {
         title: "Color Upgrade 11",
@@ -62,6 +64,45 @@ addLayer("c", {
         
         
     },
-    
+    14: {
+        title: "Color Upgrade 14",
+        description: "X1,000 points",
+        cost: new Decimal(17),
+        unlocked() {return (hasUpgrade('up', 22))},
+        
+        
+    },
+    15: {
+        title: "Color Upgrade 15",
+        description: "Colors boost prestige points",
+        cost: new Decimal(18),
+        unlocked() {return (hasUpgrade('up', 22))},
+        
+         effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
+                 c = player.c.points
+                let ret = new Decimal.pow(1.4, c)
+                if (hasUpgrade('c', 21)) ret = ret.pow(1.5)
+                if (ret.gte("1e10")) ret = ret.sqrt().times("1e5")
+                return ret;
+                },
+                effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
+        tooltip: "Formula: <br> 1.4 ^ colors"
+    },
+     21: {
+        title: "Color Upgrade 21",
+        description: "Raise the previous upgrade to ^1.5",
+        cost: new Decimal(21),
+        unlocked() {return (hasUpgrade('up', 22))},
+        
+        
+    },
+    22: {
+        title: "Color Upgrade 22",
+        description: "Raise upgrade power gain to ^1.2",
+        cost: new Decimal(23),
+        unlocked() {return (hasUpgrade('up', 22))},
+        
+        
+    },
 }
 })
